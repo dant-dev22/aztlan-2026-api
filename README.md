@@ -5,7 +5,7 @@ API REST en Python Flask para registro de participantes, comprobantes y dashboar
 ## Requisitos
 
 - Python 3.10+
-- Opcional: MySQL (por defecto se usa **modo mock** con SQLite en memoria)
+- MySQL (base de datos real)
 
 ## Instalación
 
@@ -22,8 +22,7 @@ Copia `env.example` a `.env` y ajusta:
 | Variable | Descripción | Por defecto |
 |----------|-------------|-------------|
 | `PORT` | Puerto del servidor | `5000` |
-| `DB_USE_MOCK` | Si es `true`, usa SQLite en memoria (no requiere MySQL) | `true` |
-| `DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASSWORD`, `DB_NAME` | Conexión MySQL (cuando `DB_USE_MOCK=false`) | - |
+| `DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASSWORD`, `DB_NAME` | Conexión MySQL | ver `env.example` |
 | `UPLOAD_FOLDER` | Carpeta para guardar comprobantes | `uploads/comprobantes` |
 
 ## Ejecución
@@ -75,5 +74,5 @@ CORS está habilitado para todos los orígenes (`*`) para permitir llamadas desd
 
 ## Base de datos
 
-- Con **DB_USE_MOCK=true** (por defecto): SQLite en memoria. No necesitas MySQL; los modelos son compatibles con MySQL para cuando lo configures.
-- Con **DB_USE_MOCK=false**: se usa MySQL con la URI construida a partir de `DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASSWORD`, `DB_NAME`. Crear la base `aztlan26` (o la que uses) y las tablas se crean al arrancar (`db.create_all()`).
+- La API usa **MySQL**. Configura en el servidor un archivo `.env` con `DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASSWORD` y `DB_NAME` (ver `env.example` y la guía en `docs/VPS_HOSTINGER_DATABASE.md`).
+- Las tablas se crean al arrancar si no existen (`db.create_all()`). En producción suele crearse antes la base y la tabla `registros` con el script SQL de la documentación.

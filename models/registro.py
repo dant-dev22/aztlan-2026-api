@@ -43,7 +43,7 @@ class Registro(db.Model):
     comprobante_media_type = db.Column(db.String(100), nullable=True)
     comprobante_size_bytes = db.Column(db.Numeric(12, 0), nullable=True)
 
-    created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
+    created_at = db.Column(db.DateTime(timezone=False), server_default=func.now())
 
     def to_dict(self):
         d = {
