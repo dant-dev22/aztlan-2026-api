@@ -33,3 +33,8 @@ SQLALCHEMY_ENGINE_OPTIONS = {"pool_pre_ping": True}
 BASE_DIR = Path(__file__).resolve().parent
 UPLOAD_FOLDER = BASE_DIR / os.getenv("UPLOAD_FOLDER", "uploads/comprobantes")
 UPLOAD_FOLDER.mkdir(parents=True, exist_ok=True)
+
+# Email (Gmail SMTP)
+GMAIL_USER = os.getenv("GMAIL_USER", "").strip()
+GMAIL_APP_PASSWORD = os.getenv("GMAIL_APP_PASSWORD", "").strip()
+EMAIL_ENABLED = bool(GMAIL_USER and GMAIL_APP_PASSWORD)
