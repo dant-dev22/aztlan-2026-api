@@ -6,6 +6,7 @@ from pydantic import ValidationError
 
 from models.registro import Registro, db
 from schemas.usuarios import PatchComprobanteAprobado
+from services.email_service import send_email_pago_aprobado
 
 bp = Blueprint("usuarios", __name__, url_prefix="/usuarios")
 
@@ -100,8 +101,12 @@ def patch_usuario(id: str):
     except ValidationError as e:
         return jsonify({"error": "Validación fallida", "detalles": e.errors()}), 400
 
+    aprobado_antes = reg.comprobante_aprobado
     reg.comprobante_aprobado = payload.comprobanteAprobado
     db.session.commit()
+    # Enviar correo solo cuando el admin aprueba (pasa de no aprobado a aprobado)
+    if payload.comprobanteAprobado and not aprobado_antes:
+        send_email_pago_aprobado(to_email=reg.email, nombre=reg.nombre_completo)
     return jsonify(reg.to_dict()), 200
 
 
