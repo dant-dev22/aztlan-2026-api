@@ -1,13 +1,10 @@
 """
-Genera aztlan_id único: AZT + timestamp + string aleatorio.
+Genera aztlan_id único de máximo 6 caracteres alfanuméricos.
 """
 import random
 import string
-import time
 
 
 def generate_aztlan_id() -> str:
-    """Formato: AZT + timestamp (ms) + 6 caracteres alfanuméricos."""
-    ts = str(int(time.time() * 1000))
-    rand = "".join(random.choices(string.ascii_uppercase + string.digits, k=6))
-    return f"AZT{ts}{rand}"
+    """Formato: 6 caracteres alfanuméricos (mayúsculas + dígitos). Ej: A1B2C3."""
+    return "".join(random.choices(string.ascii_uppercase + string.digits, k=6))
