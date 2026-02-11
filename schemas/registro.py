@@ -29,6 +29,7 @@ class RegistroAdultosMasters(RegistroComun):
     tipo_registro: Literal["adultos", "masters"]
     edad: int = Field(..., ge=1, le=120)
     sexo: str = Field(..., min_length=1, max_length=20)
+    cinta: str = Field(..., min_length=1, max_length=50)
     nivel_experiencia: str = Field(..., min_length=1, max_length=100)
     categoria_peso: str = Field(..., min_length=1, max_length=50)
     categoria_peso_tipo: Literal["varonil", "femenil"]
