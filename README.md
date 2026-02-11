@@ -33,6 +33,27 @@ python app.py
 
 La API quedará en `http://localhost:5000` (o el `PORT` configurado).
 
+## Actualizar en producción (VPS)
+
+Después de hacer `git pull` en el servidor para que los últimos cambios se reflejen:
+
+1. **Entrar al proyecto y activar el venv**
+   ```bash
+   cd ~/aztlan2026/aztlan-2026-api
+   source venv/bin/activate
+   ```
+
+2. **Instalar dependencias si cambió `requirements.txt`**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. **Reiniciar Gunicorn** (detener el proceso actual y volver a levantarlo)
+   ```bash
+   pkill -f "gunicorn.*app:app"
+   nohup gunicorn -w 4 -b 0.0.0.0:5000 "app:app" > api.log 2>&1 &
+   ```
+
 ## Documentación OpenAPI / Swagger
 
 Con el servidor en marcha:
