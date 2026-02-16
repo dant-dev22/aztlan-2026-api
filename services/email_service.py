@@ -6,7 +6,7 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
-from config import GMAIL_USER, GMAIL_APP_PASSWORD, EMAIL_ENABLED
+from config import GMAIL_USER, GMAIL_APP_PASSWORD, EMAIL_ENABLED, ADMIN_EMAIL
 
 
 def _get_smtp():
@@ -110,3 +110,34 @@ Tu inscripción al Torneo Aztlan 26 está completa. Nos vemos en el evento.
 </body>
 </html>"""
     return _send(to_email, subject, body_html, body_plain)
+
+
+def send_email_comprobante_subido_to_admins(aztlan_id: str, nombre_completo: str) -> bool:
+    """
+    Notifica a los admins que un usuario ha subido un comprobante (foto).
+    Se llama después de procesar y guardar el comprobante en la base de datos.
+    """
+    if not ADMIN_EMAIL:
+        return False
+    subject = "Aztlan 26 — Nuevo comprobante subido"
+    body_plain = f"""Un usuario ha subido un comprobante de pago.
+
+Usuario: {nombre_completo}
+ID Aztlan: {aztlan_id}
+
+Revisa el dashboard para aprobar o rechazar el comprobante.
+
+— Sistema Aztlan 26
+"""
+    body_html = f"""<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"></head>
+<body style="font-family: sans-serif; max-width: 560px; margin: 0 auto; padding: 20px;">
+  <p>Un usuario ha subido un <strong>comprobante de pago</strong> (foto).</p>
+  <p><strong>Usuario:</strong> {nombre_completo}<br>
+  <strong>ID Aztlan:</strong> <code>{aztlan_id}</code></p>
+  <p>Revisa el dashboard para aprobar o rechazar el comprobante.</p>
+  <p>— Sistema Aztlan 26</p>
+</body>
+</html>"""
+    return _send(ADMIN_EMAIL, subject, body_html, body_plain)

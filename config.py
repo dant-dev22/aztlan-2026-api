@@ -38,3 +38,6 @@ UPLOAD_FOLDER.mkdir(parents=True, exist_ok=True)
 GMAIL_USER = os.getenv("GMAIL_USER", "").strip()
 GMAIL_APP_PASSWORD = os.getenv("GMAIL_APP_PASSWORD", "").strip()
 EMAIL_ENABLED = bool(GMAIL_USER and GMAIL_APP_PASSWORD)
+
+# Correo de admins (notificación cuando un usuario sube comprobante)
+ADMIN_EMAIL = os.getenv("ADMIN_EMAIL", "example@gmail.com").strip()

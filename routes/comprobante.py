@@ -7,6 +7,7 @@ from datetime import datetime
 
 from schemas.comprobante import ComprobanteBody
 from services.comprobante_service import save_comprobante
+from services.email_service import send_email_comprobante_subido_to_admins
 
 bp = Blueprint("comprobante", __name__, url_prefix="/comprobante")
 
@@ -84,6 +85,12 @@ def post_comprobante():
 
     if referencia is None:
         return jsonify({"error": "Comprobante inválido (base64)"}), 400
+
+    # Notificar a admins que el usuario subió un comprobante (no bloqueamos si falla el correo)
+    send_email_comprobante_subido_to_admins(
+        aztlan_id=reg.aztlan_id,
+        nombre_completo=reg.nombre_completo,
+    )
 
     return jsonify({
         "success": True,
