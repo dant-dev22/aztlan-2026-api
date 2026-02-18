@@ -24,6 +24,8 @@ Copia `env.example` a `.env` y ajusta:
 | `PORT` | Puerto del servidor | `5000` |
 | `DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASSWORD`, `DB_NAME` | Conexión MySQL | ver `env.example` |
 | `UPLOAD_FOLDER` | Carpeta para guardar comprobantes | `uploads/comprobantes` |
+| `GMAIL_USER`, `GMAIL_APP_PASSWORD` | Correo para envío (bienvenida, pago aprobado, notificación admin) | — |
+| `ADMIN_EMAIL` | Correo del admin; recibe aviso cuando un usuario sube comprobante | — |
 
 ## Ejecución
 

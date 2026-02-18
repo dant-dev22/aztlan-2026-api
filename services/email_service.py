@@ -6,7 +6,7 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
-from config import GMAIL_USER, GMAIL_APP_PASSWORD, EMAIL_ENABLED
+from config import GMAIL_USER, GMAIL_APP_PASSWORD, ADMIN_EMAIL, EMAIL_ENABLED
 
 
 def _get_smtp():
@@ -84,6 +84,40 @@ Siguiente paso: envía tu comprobante de pago usando tu aztlan_id en la platafor
 </body>
 </html>"""
     return _send(to_email, subject, body_html, body_plain)
+
+
+def send_email_comprobante_recibido_admin(usuario_email: str, usuario_nombre: str, aztlan_id: str) -> bool:
+    """
+    Envía al admin un correo cuando un usuario sube su comprobante (comprobante recibido).
+    Incluye: correo, nombre y aztlan_id del usuario.
+    """
+    if not ADMIN_EMAIL:
+        return False
+    subject = "Aztlan 26 — Comprobante recibido (nuevo registro)"
+    body_plain = f"""Se ha recibido un comprobante de pago.
+
+Usuario:
+  Nombre:   {usuario_nombre}
+  Email:    {usuario_email}
+  Aztlan ID: {aztlan_id}
+
+Revisa el dashboard para aprobar o rechazar el comprobante.
+"""
+    body_html = f"""<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"></head>
+<body style="font-family: sans-serif; max-width: 560px; margin: 0 auto; padding: 20px;">
+  <p>Se ha recibido un <strong>comprobante de pago</strong>.</p>
+  <p><strong>Usuario:</strong></p>
+  <ul>
+    <li><strong>Nombre:</strong> {usuario_nombre}</li>
+    <li><strong>Email:</strong> {usuario_email}</li>
+    <li><strong>Aztlan ID:</strong> <code>{aztlan_id}</code></li>
+  </ul>
+  <p>Revisa el dashboard para aprobar o rechazar el comprobante.</p>
+</body>
+</html>"""
+    return _send(ADMIN_EMAIL, subject, body_html, body_plain)
 
 
 def send_email_pago_aprobado(to_email: str, nombre: str) -> bool:
