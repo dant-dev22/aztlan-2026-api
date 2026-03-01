@@ -11,6 +11,7 @@ class RegistroComun(BaseModel):
     tipo_registro: Literal["juvenil", "adultos", "masters"]
     nombre_completo: str = Field(..., min_length=1, max_length=255)
     email: str = Field(..., min_length=1, max_length=255)
+    equipo: str = Field(..., min_length=1, max_length=255)
     timestamp: str = Field(..., min_length=1)  # ISO string
 
 
@@ -49,6 +50,7 @@ def parse_registro_body(data: dict) -> RegistroJuvenil | RegistroAdultosMasters:
         mapping = {
             "tipoRegistro": "tipo_registro",
             "nombreCompleto": "nombre_completo",
+            "equipo": "equipo",
             "nivelExperiencia": "nivel_experiencia",
             "categoriaEdad": "categoria_edad",
             "categoriaPeso": "categoria_peso",

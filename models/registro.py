@@ -23,6 +23,7 @@ class Registro(db.Model):
     tipo_registro = db.Column(db.String(20), nullable=False)  # juvenil | adultos | masters
     nombre_completo = db.Column(db.String(255), nullable=False)
     email = db.Column(db.String(255), nullable=False)
+    equipo = db.Column(db.String(255), nullable=False)  # obligatorio para todos los participantes
     timestamp = db.Column(db.String(50), nullable=False)  # ISO string recibido
 
     # Juvenil
@@ -51,6 +52,7 @@ class Registro(db.Model):
             "tipoRegistro": self.tipo_registro,
             "nombreCompleto": self.nombre_completo,
             "email": self.email,
+            "equipo": self.equipo,
             "timestamp": self.timestamp,
             "aztlan_id": self.aztlan_id,
             "comprobanteAprobado": self.comprobante_aprobado,

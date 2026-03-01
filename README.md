@@ -70,7 +70,7 @@ Con el servidor en marcha:
 
 - **POST /registro**  
   Recibe formularios de registro. Body JSON según `tipoRegistro`:
-  - **Común**: `tipoRegistro` (`juvenil` \| `adultos` \| `masters`), `nombreCompleto`, `email`, `timestamp` (ISO).
+  - **Común**: `tipoRegistro` (`juvenil` \| `adultos` \| `masters`), `nombreCompleto`, `email`, `equipo` (string, obligatorio), `timestamp` (ISO).
   - **juvenil**: además `sexo`, `cinta`, `nivelExperiencia`, `categoriaEdad`, `categoriaPeso`.
   - **adultos / masters**: además `edad`, `sexo`, `nivelExperiencia`, `categoriaPeso`, `categoriaPesoTipo` (`varonil` \| `femenil`).
   - Respuesta **201**: `{ nombreParticipante, mensaje, statusCode: 200, aztlan_id }`.
@@ -98,4 +98,4 @@ CORS está habilitado para todos los orígenes (`*`) para permitir llamadas desd
 ## Base de datos
 
 - La API usa **MySQL**. Configura en el servidor un archivo `.env` con `DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASSWORD` y `DB_NAME` (ver `env.example` y la guía en `docs/VPS_HOSTINGER_DATABASE.md`).
-- Las tablas se crean al arrancar si no existen (`db.create_all()`). En producción suele crearse antes la base y la tabla `registros` con el script SQL de la documentación.
+- Las tablas se crean al arrancar si no existen (`db.create_all()`). En producción suele crearse antes la base y la tabla `registros` con el script SQL de la documentación. Si la tabla ya existía y añadiste el campo `equipo`, ejecuta: `ALTER TABLE registros ADD COLUMN equipo VARCHAR(255) NOT NULL DEFAULT '';` (o asigna un valor por defecto y luego `ALTER COLUMN` según tu motor).

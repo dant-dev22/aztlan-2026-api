@@ -21,6 +21,7 @@ def create_registro(
         tipo_registro=payload.tipo_registro,
         nombre_completo=payload.nombre_completo,
         email=payload.email,
+        equipo=payload.equipo,
         timestamp=payload.timestamp,
         sexo=getattr(payload, "sexo", None),
         cinta=getattr(payload, "cinta", None),

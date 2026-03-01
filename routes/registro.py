@@ -27,6 +27,7 @@ def post_registro():
             - tipoRegistro
             - nombreCompleto
             - email
+            - equipo
             - timestamp
           properties:
             tipoRegistro:
@@ -36,6 +37,9 @@ def post_registro():
               type: string
             email:
               type: string
+            equipo:
+              type: string
+              description: Nombre del equipo (obligatorio para todos los participantes)
             timestamp:
               type: string
               format: date-time
