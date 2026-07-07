@@ -12,6 +12,7 @@ load_dotenv()
 
 # Servidor
 PORT = int(os.getenv("PORT", "5000"))
+CURRENT_TOURNAMENT = os.getenv("CURRENT_TOURNAMENT", "2026-b").strip() or "2026-b"
 
 # Base de datos MySQL
 DB_HOST = os.getenv("DB_HOST", "localhost")

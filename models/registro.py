@@ -20,6 +20,7 @@ class Registro(db.Model):
     id = db.Column(db.String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
     aztlan_id = db.Column(db.String(64), unique=True, nullable=False, index=True)
 
+    torneo = db.Column(db.String(50), nullable=False, index=True)
     tipo_registro = db.Column(db.String(20), nullable=False)  # juvenil | adultos | masters
     nombre_completo = db.Column(db.String(255), nullable=False)
     email = db.Column(db.String(255), nullable=False)
@@ -49,6 +50,7 @@ class Registro(db.Model):
     def to_dict(self):
         d = {
             "id": self.id,
+            "torneo": self.torneo,
             "tipoRegistro": self.tipo_registro,
             "nombreCompleto": self.nombre_completo,
             "email": self.email,

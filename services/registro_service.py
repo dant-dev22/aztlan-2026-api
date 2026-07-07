@@ -1,6 +1,8 @@
 """
 Lógica de negocio para registros.
 """
+import config
+
 from schemas.registro import RegistroJuvenil, RegistroAdultosMasters
 from models.registro import db, Registro
 from utils.aztlan_id import generate_aztlan_id
@@ -18,6 +20,7 @@ def create_registro(
 
     r = Registro(
         aztlan_id=aztlan_id,
+        torneo=config.CURRENT_TOURNAMENT,
         tipo_registro=payload.tipo_registro,
         nombre_completo=payload.nombre_completo,
         email=payload.email,

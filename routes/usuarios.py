@@ -4,6 +4,7 @@ GET /usuarios, PATCH /usuarios/:id, DELETE /usuarios/:id - Dashboard.
 from flask import Blueprint, request, jsonify
 from pydantic import ValidationError
 
+import config
 from models.registro import Registro, db
 from schemas.usuarios import PatchComprobanteAprobado
 from services.email_service import send_email_pago_aprobado
@@ -27,6 +28,8 @@ def get_usuarios():
             type: object
             properties:
               id:
+                type: string
+              torneo:
                 type: string
               tipoRegistro:
                 type: string
@@ -57,7 +60,12 @@ def get_usuarios():
               createdAt:
                 type: string
     """
-    registros = Registro.query.order_by(Registro.created_at.desc()).all()
+    registros = (
+        Registro.query
+        .filter(Registro.torneo == config.CURRENT_TOURNAMENT)
+        .order_by(Registro.created_at.desc())
+        .all()
+    )
     return jsonify([r.to_dict() for r in registros]), 200
 
 
